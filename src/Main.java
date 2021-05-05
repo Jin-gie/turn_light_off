@@ -5,6 +5,7 @@ import Views.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Main class of the program

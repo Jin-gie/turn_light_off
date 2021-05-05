@@ -1,6 +1,7 @@
 package Models;
 
 import java.util.Observable;
+import java.util.Random;
 
 /**
  * Model of a grid
@@ -12,6 +13,7 @@ public class Grid
         extends Observable {
     public static final int GRID_SIZE = 5;
     public static final int CELL_SIZE = 100;
+    public static final int RANDOM_CELLS = 8;
     private boolean[][] grid;
     private State state;
 
@@ -68,6 +70,34 @@ public class Grid
     }
 
     public void randomizeGrid() {
+        Random r = new Random();
+        int[][] cells = new int[RANDOM_CELLS][RANDOM_CELLS];
+        int x, y;
+        boolean found;
+
+        for (int i = 0; i < RANDOM_CELLS; i++) {
+            x = r.nextInt(GRID_SIZE);
+            y = r.nextInt(GRID_SIZE);
+            found = false;
+
+            for (int[] item : cells) {
+                if (item[0] == x && item[1] == y) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                cells[i] = new int[]{x, y};
+        }
+
+        // Reset all cells to false
+        for (int xG = 0; xG < GRID_SIZE; xG++)
+            for (int yG = 0; yG < GRID_SIZE; yG++)
+                this.grid[yG][xG] = false;
+
+        for (int[] item : cells)
+            this.grid[item[1]][item[0]] = true;
 
     }
 
