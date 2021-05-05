@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.Grid;
+import Models.State;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -19,15 +20,27 @@ public class GridController extends MouseAdapter {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         if (SwingUtilities.isLeftMouseButton(e)) {
-            int x = this.gridModel.reduce(e.getX());
-            int y = this.gridModel.reduce(e.getY());
+            int xMouse = this.gridModel.reduce(e.getX());
+            int yMouse = this.gridModel.reduce(e.getY());
 
-            this.gridModel.switchAround(x, y);
-
-            this.gridModel.isFinished();
+            if (this.gridModel.getState() == State.CONFIG)
+                this.configStep(xMouse, yMouse);
+            else if (this.gridModel.getState() == State.GAME)
+                this.configStep(xMouse, yMouse);
         }
+    }
+
+    private void playStep(int xMouse, int yMouse) {
+        this.gridModel.switchAround(xMouse, yMouse);
+
+        if (this.gridModel.testIfFinished())
+            this.gridModel.finishGame();
+    }
+
+    private void configStep(int xMouse, int yMouse) {
+        this.gridModel.switchState(xMouse, yMouse);
     }
 }
 

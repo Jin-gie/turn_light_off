@@ -49,7 +49,7 @@ public class GridView extends JPanel implements Observer {
             }
         }
 
-        if (this.gridModel != null && this.gridModel.isFinished()) {
+        if (this.gridModel != null && this.gridModel.getState() == State.FINISH) {
             g.setColor(Color.black);
             g.setFont(this.title);
             g.drawString("You won!", 100, 100);

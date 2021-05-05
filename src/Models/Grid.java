@@ -53,13 +53,12 @@ public class Grid
 //                switchState(a, b);
     }
 
-    public boolean isFinished() {
+    public boolean testIfFinished() {
         for (int x = 0; x < GRID_SIZE; x++) {
             for (int y = 0; y < GRID_SIZE; y++)
                 if (!isOn(x, y))
                     return false;
         }
-        this.state = State.FINISH;
         return true;
     }
 

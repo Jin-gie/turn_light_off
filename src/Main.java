@@ -26,7 +26,7 @@ public class Main {
         f.setResizable(false);
 
         gv.setPreferredSize(new Dimension(Grid.CELL_SIZE * Grid.GRID_SIZE, Grid.CELL_SIZE * Grid.GRID_SIZE));
-        mv.setPreferredSize(new Dimension(200, Grid.CELL_SIZE * Grid.GRID_SIZE));
+        mv.setPreferredSize(new Dimension(MenuView.BTN_WIDTH, Grid.CELL_SIZE * Grid.GRID_SIZE));
 
         f.getContentPane().add(gv, BorderLayout.EAST);
         f.getContentPane().add(mv, BorderLayout.WEST);
