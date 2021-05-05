@@ -46,6 +46,11 @@ public class Grid
             if (x1 >= 0 && x1 < GRID_SIZE && y1 >= 0 && y1 < GRID_SIZE)
                 this.switchState(x + item[0], y + item[1]);
         }
+
+        // To test winning panel
+//        for (int a = 0; a < GRID_SIZE; a++)
+//            for (int b = 0; b < GRID_SIZE; b++)
+//                switchState(a, b);
     }
 
     public boolean isFinished() {
@@ -78,11 +83,11 @@ public class Grid
         this.grid[y][x] = false;
     }
 
-    public int transformX(int x) {
-        return (x / CELL_SIZE);
+    public int reduce(int i) {
+        return (i / CELL_SIZE);
     }
 
-    public int transformY(int y) {
-        return y / CELL_SIZE;
+    public State getState() {
+        return this.state;
     }
 }

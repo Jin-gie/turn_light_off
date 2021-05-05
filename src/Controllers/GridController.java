@@ -21,8 +21,8 @@ public class GridController extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (SwingUtilities.isLeftMouseButton(e)) {
-            int x = this.gridModel.transformX(e.getX());
-            int y = this.gridModel.transformY(e.getY());
+            int x = this.gridModel.reduce(e.getX());
+            int y = this.gridModel.reduce(e.getY());
 
             this.gridModel.switchAround(x, y);
 
