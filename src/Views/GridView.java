@@ -29,7 +29,8 @@ public class GridView extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        gridModel = (Grid) o;
+        if (o instanceof Grid)
+            gridModel = (Grid) o;
         repaint();
     }
 
@@ -49,7 +50,7 @@ public class GridView extends JPanel implements Observer {
             }
         }
 
-        if (this.gridModel != null && this.gridModel.getState() == State.FINISH) {
+        if (this.gridModel != null && this.gridModel.getState() == State.WON) {
             g.setColor(Color.black);
             g.setFont(this.title);
             g.drawString("You won!", 100, 100);

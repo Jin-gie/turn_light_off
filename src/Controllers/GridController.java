@@ -25,10 +25,11 @@ public class GridController extends MouseAdapter {
             int xMouse = this.gridModel.reduce(e.getX());
             int yMouse = this.gridModel.reduce(e.getY());
 
-            if (this.gridModel.getState() == State.CONFIG)
+            if (this.gridModel.getState() == State.CONFIG ||
+                    this.gridModel.getState() == State.PLAYABLE)
                 this.configStep(xMouse, yMouse);
             else if (this.gridModel.getState() == State.GAME)
-                this.configStep(xMouse, yMouse);
+                this.playStep(xMouse, yMouse);
         }
     }
 
@@ -36,7 +37,7 @@ public class GridController extends MouseAdapter {
         this.gridModel.switchAround(xMouse, yMouse);
 
         if (this.gridModel.testIfFinished())
-            this.gridModel.finishGame();
+            this.gridModel.winGame();
     }
 
     private void configStep(int xMouse, int yMouse) {

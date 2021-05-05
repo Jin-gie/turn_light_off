@@ -24,6 +24,11 @@ public class Grid
                 grid[x][y] = false;
     }
 
+    public Grid(Grid g) {
+        this.grid = g.getGrid();
+        this.state = State.CONFIG;
+    }
+
     public boolean isOn(int x, int y) {
         return this.grid[y][x];
     }
@@ -62,8 +67,16 @@ public class Grid
         return true;
     }
 
+    public void randomizeGrid() {
+
+    }
+
     public void launchGame() {
         this.state = State.GAME;
+    }
+
+    public void winGame() {
+        this.state = State.WON;
     }
 
     public void finishGame() {
@@ -72,6 +85,10 @@ public class Grid
 
     public void configGame() {
         this.state = State.CONFIG;
+    }
+
+    public void playableGame() {
+        this.state = State.PLAYABLE;
     }
 
     private void turnOn(int x, int y) {
@@ -88,5 +105,13 @@ public class Grid
 
     public State getState() {
         return this.state;
+    }
+
+    public boolean[][] getGrid() {
+        return grid;
+    }
+
+    public void setGrid(Grid g) {
+        this.grid = g.getGrid();
     }
 }

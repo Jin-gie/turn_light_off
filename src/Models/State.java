@@ -9,5 +9,5 @@ package Models;
  */
 
 public enum State {
-    CONFIG, GAME, FINISH;
+    CONFIG, PLAYABLE, GAME, FINISH, WON
 }

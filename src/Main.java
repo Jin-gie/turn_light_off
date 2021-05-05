@@ -1,4 +1,5 @@
 import Controllers.GridController;
+import Controllers.MenuController;
 import Models.Grid;
 import Views.*;
 
@@ -14,11 +15,16 @@ public class Main {
     public static void main(String[] args) {
         Grid g = new Grid();
         GridController gc = new GridController(g);
+        MenuController mc = new MenuController(g);
 
         GridView gv = new GridView(gc);
-        MenuView mv = new MenuView();
+        MenuView mv = new MenuView(mc);
 
         g.addObserver(gv);
+        g.addObserver(mv);
+
+        mc.addObserver(mv);
+        mc.addObserver(gv);
 
         JFrame f = new JFrame("Eteins la lumières");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
