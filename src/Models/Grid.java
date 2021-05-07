@@ -9,6 +9,8 @@ import java.util.Random;
  * @author erinb
  */
 
+
+@SuppressWarnings("deprecation")
 public class Grid
         extends Observable {
     public static final int GRID_SIZE = 5;
@@ -32,6 +34,7 @@ public class Grid
     public Grid(Grid g) {
         this.grid = g.getGrid();
         this.state = State.CONFIG;
+        this.counter = 0;
     }
 
     public boolean isOn(int x, int y) {
@@ -49,8 +52,8 @@ public class Grid
     }
 
     private void switchAround(int x, int y) {
-        int steps[][] = {{0, 0}, {-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        for (int item[] : steps) {
+        int[][] steps = {{0, 0}, {-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        for (int[] item : steps) {
             int x1 = x + item[0];
             int y1 = y + item[1];
             if (x1 >= 0 && x1 < GRID_SIZE && y1 >= 0 && y1 < GRID_SIZE)
@@ -63,10 +66,15 @@ public class Grid
         this.increaseCounter();
         if (this.testIfFinished())
             this.finishGame();
+
+        setChanged();
+        notifyObservers();
     }
 
     public void configStep(int x, int y) {
         this.switchState(x, y);
+        setChanged();
+        notifyObservers();
     }
 
     public boolean testIfFinished() {

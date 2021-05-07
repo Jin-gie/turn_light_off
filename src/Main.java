@@ -5,7 +5,6 @@ import Views.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 /**
  * Main class of the program
@@ -28,7 +27,7 @@ public class Main {
         mc.addObserver(gv);
 
 
-        JFrame f = new JFrame("Eteins la lumières");
+        JFrame f = new JFrame("Turn off the lights");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLayout(new BorderLayout());
         f.setResizable(false);
