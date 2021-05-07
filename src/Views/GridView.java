@@ -3,6 +3,7 @@ package Views;
 import Controllers.GridController;
 import Models.Grid;
 import Models.State;
+import org.w3c.dom.css.Counter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class GridView extends JPanel implements Observer {
     private GridController gc;
     private final Color green = new Color(0, 121, 41);
     private final Color ligtGreen = new Color(138, 246, 138);
-    private final Font title = new Font("Helvetica", Font.BOLD, 50);
+    private final Font TITLE = new Font("Helvetica", Font.BOLD, 50);
 
     public GridView(GridController gc) {
         this.gc = gc;
@@ -37,6 +38,7 @@ public class GridView extends JPanel implements Observer {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+
         g.setColor(green);
         for (int x = 0; x < Grid.CELL_SIZE * Grid.GRID_SIZE; x += Grid.CELL_SIZE) {
             for (int y = 0; y < Grid.CELL_SIZE * Grid.GRID_SIZE; y += Grid.CELL_SIZE) {
@@ -50,9 +52,9 @@ public class GridView extends JPanel implements Observer {
             }
         }
 
-        if (this.gridModel != null && this.gridModel.getState() == State.WON) {
+        if (this.gridModel != null && this.gridModel.getState() == State.FINISH) {
             g.setColor(Color.black);
-            g.setFont(this.title);
+            g.setFont(TITLE);
             g.drawString("You won!", 100, 100);
         }
 

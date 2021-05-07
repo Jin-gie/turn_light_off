@@ -16,6 +16,7 @@ public class Grid
     public static final int RANDOM_CELLS = 8;
     private boolean[][] grid;
     private State state;
+    private int counter;
 
     public Grid() {
         this.grid = new boolean[GRID_SIZE][GRID_SIZE];
@@ -24,6 +25,8 @@ public class Grid
         for (int y = 0; y < GRID_SIZE; y++)
             for (int x = 0; x < GRID_SIZE; x++)
                 grid[x][y] = false;
+
+        this.counter = 0;
     }
 
     public Grid(Grid g) {
@@ -35,7 +38,7 @@ public class Grid
         return this.grid[y][x];
     }
 
-    public void switchState(int x, int y) {
+    private void switchState(int x, int y) {
         if (this.grid[y][x])
             this.turnOff(x, y);
         else
@@ -45,7 +48,7 @@ public class Grid
         notifyObservers();
     }
 
-    public void switchAround(int x, int y) {
+    private void switchAround(int x, int y) {
         int steps[][] = {{0, 0}, {-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         for (int item[] : steps) {
             int x1 = x + item[0];
@@ -53,11 +56,17 @@ public class Grid
             if (x1 >= 0 && x1 < GRID_SIZE && y1 >= 0 && y1 < GRID_SIZE)
                 this.switchState(x + item[0], y + item[1]);
         }
+    }
 
-        // To test winning panel
-//        for (int a = 0; a < GRID_SIZE; a++)
-//            for (int b = 0; b < GRID_SIZE; b++)
-//                switchState(a, b);
+    public void playStep(int x, int y) {
+        this.switchAround(x, y);
+        this.increaseCounter();
+        if (this.testIfFinished())
+            this.finishGame();
+    }
+
+    public void configStep(int x, int y) {
+        this.switchState(x, y);
     }
 
     public boolean testIfFinished() {
@@ -102,11 +111,8 @@ public class Grid
     }
 
     public void launchGame() {
+        this.counter = 0;
         this.state = State.GAME;
-    }
-
-    public void winGame() {
-        this.state = State.WON;
     }
 
     public void finishGame() {
@@ -143,5 +149,13 @@ public class Grid
 
     public void setGrid(Grid g) {
         this.grid = g.getGrid();
+    }
+
+    public int getCounter() {
+        return this.counter;
+    }
+
+    public void increaseCounter() {
+        this.counter++;
     }
 }

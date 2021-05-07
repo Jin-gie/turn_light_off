@@ -12,7 +12,7 @@ import java.awt.event.*;
  */
 
 public class GridController extends MouseAdapter {
-    private Grid gridModel;
+    private final Grid gridModel;
 
     public GridController(Grid grid) {
         super();
@@ -27,21 +27,10 @@ public class GridController extends MouseAdapter {
 
             if (this.gridModel.getState() == State.CONFIG ||
                     this.gridModel.getState() == State.PLAYABLE)
-                this.configStep(xMouse, yMouse);
+                this.gridModel.configStep(xMouse, yMouse);
             else if (this.gridModel.getState() == State.GAME)
-                this.playStep(xMouse, yMouse);
+                this.gridModel.playStep(xMouse, yMouse);
         }
-    }
-
-    private void playStep(int xMouse, int yMouse) {
-        this.gridModel.switchAround(xMouse, yMouse);
-
-        if (this.gridModel.testIfFinished())
-            this.gridModel.winGame();
-    }
-
-    private void configStep(int xMouse, int yMouse) {
-        this.gridModel.switchState(xMouse, yMouse);
     }
 }
 

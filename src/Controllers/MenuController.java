@@ -35,9 +35,9 @@ public class MenuController
             case "Random" -> this.gridModel.randomizeGrid();
             case "Play" -> {
                 this.gridModel.launchGame();
-                this.gridModel.setGrid(this.starter); // Voir pourquoi ne redonne pas la grille
+                this.gridModel.setGrid(this.starter); // TODO Voir pourquoi ne redonne pas la grille
             }
-            case "Quit" -> this.gridModel.finishGame();
+            case "Quit" -> this.gridModel.configGame();
         }
 
         setChanged();

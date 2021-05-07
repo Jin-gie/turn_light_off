@@ -19,13 +19,14 @@ public class Main {
         MenuController mc = new MenuController(g);
 
         GridView gv = new GridView(gc);
-        MenuView mv = new MenuView(mc);
+        MenuView mv = new MenuView(mc, gc);
 
         g.addObserver(gv);
         g.addObserver(mv);
 
         mc.addObserver(mv);
         mc.addObserver(gv);
+
 
         JFrame f = new JFrame("Eteins la lumières");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
