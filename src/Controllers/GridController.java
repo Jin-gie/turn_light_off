@@ -5,6 +5,7 @@ import Models.State;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Observable;
 
 /**
  * Controller of the cells of the grid
@@ -31,6 +32,10 @@ public class GridController extends MouseAdapter {
             else if (this.gridModel.getState() == State.GAME)
                 this.gridModel.playStep(xMouse, yMouse);
         }
+    }
+
+    public Grid getGrid() {
+        return this.gridModel;
     }
 }
 
