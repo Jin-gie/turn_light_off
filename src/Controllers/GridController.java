@@ -5,7 +5,6 @@ import Models.State;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Observable;
 
 /**
  * Controller of the cells of the grid

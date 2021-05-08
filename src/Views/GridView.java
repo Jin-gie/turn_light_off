@@ -19,7 +19,7 @@ public class GridView extends JPanel implements Observer {
     private final GridController gc;
     private final Color green = new Color(0, 121, 41);
     private final Color ligtGreen = new Color(138, 246, 138);
-    private final Font TITLE = new Font("Helvetica", Font.BOLD, 50);
+    private WinView wv;
 
     public GridView(GridController gc) {
         this.gc = gc;
@@ -29,6 +29,14 @@ public class GridView extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        this.wv = new WinView(this.getWidth(), this.getHeight(), String.valueOf(this.gc.getGrid().getCounter()));
+        if (this.gc.getGrid().getState() == State.FINISH)
+            this.add(wv);
+        else {
+            this.removeAll();
+            this.revalidate();
+        }
+
         repaint();
     }
 
@@ -39,6 +47,7 @@ public class GridView extends JPanel implements Observer {
         for (int x = 0; x < Grid.CELL_SIZE * Grid.GRID_SIZE; x += Grid.CELL_SIZE) {
             for (int y = 0; y < Grid.CELL_SIZE * Grid.GRID_SIZE; y += Grid.CELL_SIZE) {
                 if (this.gc.getGrid() != null) {
+                    // change color regarding the state of the light
                     if (this.gc.getGrid().isOn(this.gc.getGrid().reduce(x), this.gc.getGrid().reduce(y)))
                         g.setColor(ligtGreen);
                     else
@@ -46,12 +55,6 @@ public class GridView extends JPanel implements Observer {
                 }
                 g.fillRect(x + 1, y + 1, Grid.CELL_SIZE - 1, Grid.CELL_SIZE - 1);
             }
-        }
-
-        if (this.gc.getGrid() != null && this.gc.getGrid().getState() == State.FINISH) {
-            g.setColor(Color.black);
-            g.setFont(TITLE);
-            g.drawString("You won!", 100, 100);
         }
 
     }

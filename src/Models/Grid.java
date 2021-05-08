@@ -16,13 +16,14 @@ public class Grid
     public static final int GRID_SIZE = 5;
     public static final int CELL_SIZE = 100;
     public static final int RANDOM_CELLS = 8;
-    private boolean[][] grid;
+    public boolean[][] grid;
     private State state;
     private int counter;
 
     public Grid() {
         this.grid = new boolean[GRID_SIZE][GRID_SIZE];
         this.state = State.CONFIG;
+
         // Initialize all cells to false (= lights off)
         for (int y = 0; y < GRID_SIZE; y++)
             for (int x = 0; x < GRID_SIZE; x++)
@@ -31,14 +32,14 @@ public class Grid
         this.counter = 0;
     }
 
-    public Grid(Grid g) {
-        this.grid = g.getGrid();
-        this.state = State.CONFIG;
-        this.counter = 0;
-    }
-
     public boolean isOn(int x, int y) {
         return this.grid[y][x];
+    }
+
+    public void emptyGrid() {
+        for (int xG = 0; xG < GRID_SIZE; xG++)
+            for (int yG = 0; yG < GRID_SIZE; yG++)
+                this.grid[yG][xG] = false;
     }
 
     private void switchState(int x, int y) {
@@ -80,7 +81,7 @@ public class Grid
     public boolean testIfFinished() {
         for (int x = 0; x < GRID_SIZE; x++) {
             for (int y = 0; y < GRID_SIZE; y++)
-                if (!isOn(x, y))
+                if (isOn(x, y))
                     return false;
         }
         return true;
@@ -108,10 +109,7 @@ public class Grid
                 cells[i] = new int[]{x, y};
         }
 
-        // Reset all cells to false
-        for (int xG = 0; xG < GRID_SIZE; xG++)
-            for (int yG = 0; yG < GRID_SIZE; yG++)
-                this.grid[yG][xG] = false;
+        this.emptyGrid();
 
         for (int[] item : cells)
             this.grid[item[1]][item[0]] = true;
@@ -165,5 +163,9 @@ public class Grid
 
     public void increaseCounter() {
         this.counter++;
+    }
+
+    public void resetCounter() {
+        this.counter = 0;
     }
 }
