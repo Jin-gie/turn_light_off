@@ -94,26 +94,28 @@ public class Grid
         boolean found;
 
         for (int i = 0; i < RANDOM_CELLS; i++) {
-            x = r.nextInt(GRID_SIZE);
-            y = r.nextInt(GRID_SIZE);
-            found = false;
+            while (true) {
+                found = false;
+                x = r.nextInt(GRID_SIZE);
+                y = r.nextInt(GRID_SIZE);
 
-            for (int[] item : cells) {
-                if (item[0] == x && item[1] == y) {
-                    found = true;
-                    break;
+                for (int[] item : cells) {
+                    if (item[0] == x && item[1] == y) {
+                        found = true;
+                        break;
+                    }
                 }
-            }
 
-            if (!found)
-                cells[i] = new int[]{x, y};
+                if (!found)
+                    break;
+            }
+            cells[i] = new int[]{x, y};
         }
 
         this.emptyGrid();
 
         for (int[] item : cells)
             this.grid[item[1]][item[0]] = true;
-
     }
 
     public void launchGame() {
