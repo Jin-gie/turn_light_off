@@ -18,11 +18,11 @@ public class MenuController
         implements ActionListener {
 
     Grid gridModel;
-    Grid starter;
+    boolean[][] starter;
 
     public MenuController(Grid g) {
         this.gridModel = g;
-        this.starter = new Grid();
+        this.starter = new boolean[Grid.GRID_SIZE][Grid.GRID_SIZE];
     }
 
     @Override
@@ -30,11 +30,16 @@ public class MenuController
         String btnText = ((JButton) e.getSource()).getText();
 
         switch (btnText) {
-            case "Configure" -> this.gridModel.playableGame();
+            case "Configure" -> {
+                for (int x = 0; x < Grid.GRID_SIZE; x++)
+                    for (int y = 0; y < Grid.GRID_SIZE; y++)
+                        this.starter[y][x] = this.gridModel.getElement(x, y);
+                this.gridModel.playableGame();
+            }
             case "Random" -> this.gridModel.randomizeGrid();
             case "Play" -> {
                 this.gridModel.launchGame();
-                this.gridModel.setGrid(this.starter); // TODO Load last saved grid
+                this.gridModel.setGrid(starter);
             }
             case "Quit" -> this.gridModel.configGame();
             case "Restart" -> {

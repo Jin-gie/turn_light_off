@@ -153,8 +153,14 @@ public class Grid
         return grid;
     }
 
-    public void setGrid(Grid g) {
-        this.grid = g.getGrid();
+    public boolean getElement(int x, int y) {
+        return this.grid[y][x];
+    }
+
+    public void setGrid(boolean[][] g) {
+        for (int x = 0; x < GRID_SIZE; x++)
+            for (int y = 0; y < GRID_SIZE; y++)
+                this.grid[y][x] = g[y][x];
     }
 
     public int getCounter() {
