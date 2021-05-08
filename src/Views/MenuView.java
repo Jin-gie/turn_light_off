@@ -28,13 +28,15 @@ public class MenuView extends JPanel implements Observer {
         this.gc = gc;
         this.gc.getGrid().addObserver(this);
 
-        this.buttons = new JButton[4];
+        this.buttons = new JButton[5];
         buttons[0] = new JButton("Configure");
         buttons[1] = new JButton("Random");
         buttons[2] = new JButton("Play");
         buttons[3] = new JButton("Quit");
+        buttons[4] = new JButton("Restart");
 
         for (JButton btn : buttons) {
+            btn.setFont(new Font("Helvetica", Font.PLAIN, 15));
             btn.setPreferredSize(new Dimension(BTN_WIDTH, 50));
             btn.setBackground(Color.WHITE);
             btn.setBorder(new EtchedBorder());
@@ -43,6 +45,7 @@ public class MenuView extends JPanel implements Observer {
 
         this.buttons[2].setEnabled(false);
         this.buttons[3].setEnabled(false);
+        this.buttons[4].setEnabled(false);
 
         this.ctrPanel = new CounterView();
 
@@ -51,6 +54,7 @@ public class MenuView extends JPanel implements Observer {
         this.add(this.ctrPanel);
         this.add(buttons[2]);
         this.add(buttons[3]);
+        this.add(buttons[4]);
     }
 
     @Override
@@ -58,23 +62,31 @@ public class MenuView extends JPanel implements Observer {
         this.ctrPanel.updateCounter(String.valueOf(this.gc.getGrid().getCounter()));
 
         switch (this.gc.getGrid().getState()) {
-            case CONFIG, FINISH -> {
+            case CONFIG -> {
                 this.buttons[0].setEnabled(true); // TODO disable configure if all lights off
                 this.buttons[1].setEnabled(true);
                 this.buttons[2].setEnabled(false);
                 this.buttons[3].setEnabled(false);
+                this.buttons[4].setEnabled(true);
             }
             case PLAYABLE -> {
                 this.buttons[0].setEnabled(true);
                 this.buttons[1].setEnabled(true);
                 this.buttons[2].setEnabled(true);
                 this.buttons[3].setEnabled(false);
+                this.buttons[4].setEnabled(true);
             }
             case GAME -> {
                 this.buttons[0].setEnabled(false);
                 this.buttons[1].setEnabled(false);
                 this.buttons[2].setEnabled(false);
                 this.buttons[3].setEnabled(true);
+                this.buttons[4].setEnabled(true);
+            }
+            case FINISH -> {
+                for (JButton btn : this.buttons)
+                    btn.setEnabled(false);
+                this.buttons[4].setEnabled(true);
             }
         }
 

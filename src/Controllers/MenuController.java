@@ -12,6 +12,7 @@ import java.util.Observable;
  * @author erinb
  */
 
+@SuppressWarnings("deprecation")
 public class MenuController
         extends Observable
         implements ActionListener {
@@ -21,6 +22,7 @@ public class MenuController
 
     public MenuController(Grid g) {
         this.gridModel = g;
+        this.starter = new Grid();
     }
 
     @Override
@@ -28,16 +30,18 @@ public class MenuController
         String btnText = ((JButton) e.getSource()).getText();
 
         switch (btnText) {
-            case "Configure" -> {
-                this.starter = new Grid(this.gridModel);
-                this.gridModel.playableGame();
-            }
+            case "Configure" -> this.gridModel.playableGame();
             case "Random" -> this.gridModel.randomizeGrid();
             case "Play" -> {
                 this.gridModel.launchGame();
-                this.gridModel.setGrid(this.starter); // TODO Voir pourquoi ne redonne pas la grille
+                this.gridModel.setGrid(this.starter); // TODO Load last saved grid
             }
             case "Quit" -> this.gridModel.configGame();
+            case "Restart" -> {
+                this.gridModel.configGame();
+                this.gridModel.emptyGrid();
+                this.gridModel.resetCounter();
+            }
         }
 
         setChanged();
