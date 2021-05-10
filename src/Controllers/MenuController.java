@@ -47,6 +47,9 @@ public class MenuController
                 this.gridModel.emptyGrid();
                 this.gridModel.resetCounter();
             }
+            case "Validate" -> {
+                System.out.println();
+            }
         }
 
         setChanged();

@@ -2,6 +2,8 @@ package Views;
 
 import Controllers.GridController;
 import Controllers.MenuController;
+import Controllers.RandomController;
+import Models.Grid;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -18,14 +20,16 @@ import java.util.Observer;
 public class MenuView extends JPanel implements Observer {
     public static final int BTN_WIDTH = 200;
     private final MenuController mc;
+    private final RandomController rc;
     private final GridController gc;
     private final JButton[] buttons;
     private final CounterView ctrPanel;
+    private JSpinner nbRandom = new JSpinner();
 
-    // TODO create view for the buttons
-    public MenuView(MenuController mc, GridController gc) {
+    public MenuView(MenuController mc, GridController gc, RandomController rc) {
         this.mc = mc;
         this.gc = gc;
+        this.rc = rc;
         this.gc.getGrid().addObserver(this);
 
         this.buttons = new JButton[5];
@@ -43,6 +47,7 @@ public class MenuView extends JPanel implements Observer {
             btn.addActionListener(mc);
         }
 
+        this.buttons[0].setEnabled(false);
         this.buttons[2].setEnabled(false);
         this.buttons[3].setEnabled(false);
         this.buttons[4].setEnabled(false);
@@ -51,10 +56,11 @@ public class MenuView extends JPanel implements Observer {
 
         this.add(buttons[0]);
         this.add(buttons[1]);
-        this.add(this.ctrPanel);
+        this.add(this.createRandomChangerView());
         this.add(buttons[2]);
         this.add(buttons[3]);
         this.add(buttons[4]);
+        this.add(this.ctrPanel);
     }
 
     @Override
@@ -63,14 +69,14 @@ public class MenuView extends JPanel implements Observer {
 
         switch (this.gc.getGrid().getState()) {
             case CONFIG -> {
-                this.buttons[0].setEnabled(true); // TODO disable configure if all lights off
+                this.buttons[0].setEnabled(!this.gc.getGrid().testIfFinished());
                 this.buttons[1].setEnabled(true);
                 this.buttons[2].setEnabled(false);
                 this.buttons[3].setEnabled(false);
                 this.buttons[4].setEnabled(true);
             }
             case PLAYABLE -> {
-                this.buttons[0].setEnabled(true);
+                this.buttons[0].setEnabled(!this.gc.getGrid().testIfFinished());
                 this.buttons[1].setEnabled(true);
                 this.buttons[2].setEnabled(true);
                 this.buttons[3].setEnabled(false);
@@ -97,4 +103,33 @@ public class MenuView extends JPanel implements Observer {
         super.paintComponent(g);
     }
 
+    public JPanel createRandomChangerView() {
+        JPanel randomView = new JPanel();
+
+        JLabel expl = new JLabel("Nb of random cells: ");
+
+        SpinnerModel spinnerModel = new SpinnerNumberModel(8, 1, (Grid.GRID_SIZE * Grid.GRID_SIZE) - 1, 1);
+        nbRandom.setModel(spinnerModel);
+        nbRandom.setFont(new Font("Helvetica", Font.PLAIN, 15));
+        nbRandom.setPreferredSize(new Dimension(50, 25));
+        ((JSpinner.DefaultEditor) nbRandom.getEditor()).getTextField().setEditable(false);
+        nbRandom.addChangeListener(rc);
+
+//        JButton validateRandom = new JButton( "Validate");
+//        validateRandom.setFont(new Font("Helvetica", Font.PLAIN, 15));
+//        validateRandom.setPreferredSize(new Dimension(75, 25));
+//        validateRandom.setBackground(Color.WHITE);
+//        validateRandom.setBorder(new EtchedBorder());
+//        validateRandom.addActionListener(mc);
+
+        randomView.add(expl);
+        randomView.add(nbRandom);
+//        randomView.add(validateRandom);
+
+        return randomView;
+    }
+
+    public int getRandomVal() {
+        return Integer.parseInt(((JSpinner.DefaultEditor) this.nbRandom.getEditor()).getTextField().getText());
+    }
 }

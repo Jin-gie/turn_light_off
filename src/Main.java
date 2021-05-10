@@ -1,5 +1,6 @@
 import Controllers.GridController;
 import Controllers.MenuController;
+import Controllers.RandomController;
 import Models.Grid;
 import Views.*;
 
@@ -16,9 +17,10 @@ public class Main {
         Grid g = new Grid();
         GridController gc = new GridController(g);
         MenuController mc = new MenuController(g);
+        RandomController rc = new RandomController(g);
 
         GridView gv = new GridView(gc);
-        MenuView mv = new MenuView(mc, gc);
+        MenuView mv = new MenuView(mc, gc, rc);
 
         g.addObserver(gv);
         g.addObserver(mv);

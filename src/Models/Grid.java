@@ -15,7 +15,7 @@ public class Grid
         extends Observable {
     public static final int GRID_SIZE = 5;
     public static final int CELL_SIZE = 100;
-    public static final int RANDOM_CELLS = 8;
+    private int randomCells;
     public boolean[][] grid;
     private State state;
     private int counter;
@@ -23,6 +23,7 @@ public class Grid
     public Grid() {
         this.grid = new boolean[GRID_SIZE][GRID_SIZE];
         this.state = State.CONFIG;
+        this.randomCells = 8;
 
         // Initialize all cells to false (= lights off)
         for (int y = 0; y < GRID_SIZE; y++)
@@ -89,11 +90,11 @@ public class Grid
 
     public void randomizeGrid() {
         Random r = new Random();
-        int[][] cells = new int[RANDOM_CELLS][RANDOM_CELLS];
+        int[][] cells = new int[randomCells][randomCells];
         int x, y;
         boolean found;
 
-        for (int i = 0; i < RANDOM_CELLS; i++) {
+        for (int i = 0; i < randomCells; i++) {
             while (true) {
                 found = false;
                 x = r.nextInt(GRID_SIZE);
@@ -175,5 +176,14 @@ public class Grid
 
     public void resetCounter() {
         this.counter = 0;
+    }
+
+    public int getNbRandom() {
+        return this.randomCells;
+    }
+
+    public void setNbRandom(int n) {
+        if (n > 0 && n < (GRID_SIZE * GRID_SIZE - 1))
+            this.randomCells = n;
     }
 }
